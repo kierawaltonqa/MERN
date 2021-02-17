@@ -1,11 +1,18 @@
 `use strict`;
 const router = require('express').Router(); //express has an interface called router
+const { Product } = require("../config/db");
 
 let products = ["apples", "cheese", "coffee"];
 
 // requests (CRUD)
 router.get("/getAll", (req, res) => {
-    res.send(`Here's the info you asked for...${products}`);
+    Product.find((err, products) => {
+        if (err) {
+            console.error(err);
+        }
+        res.send(products);
+    })
+    // res.send(`Here's the info you asked for...${products}`);
 
 });
 
