@@ -1,0 +1,18 @@
+{
+  "name": "mern2",
+  "version": "1.0.0",
+  "description": "practicing node",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Kiera Walton",
+  "license": "ISC",
+  "dependencies": {
+    "cowsay": "^1.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
