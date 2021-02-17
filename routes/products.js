@@ -2,7 +2,7 @@
 const router = require('express').Router(); //express has an interface called router
 const { Product } = require("../config/db");
 
-let products = ["apples", "cheese", "coffee"];
+
 
 // requests (CRUD)
 router.get("/getAll", (req, res) => {
@@ -16,6 +16,16 @@ router.get("/getAll", (req, res) => {
 
 });
 
+router.get("/read/:id", (req, res, next) => {
+    Product.findById(req.params.id, (err, products) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.send(products);
+        }
+    })
+})
+
 router.post("/create", (req, res) => {
     const name = req.body.name;
     products.push(name);
@@ -24,8 +34,16 @@ router.post("/create", (req, res) => {
 
 // url parameters
 router.delete("/delete/:id", (req, res, next) => {
-    console.log(req.params.id); //parameters I send accross, id 
-    res.send(`done`);
+    Product.findByIdAndDelete(req.params.id, (err, products) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.send(products);
+
+        }
+    })
+    // console.log(req.params.id); //parameters I send accross, id 
+    // res.send(`done`);
 });
 
 // query parameter
