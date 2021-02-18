@@ -1,9 +1,10 @@
 'use strict';
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
+const { DB_URL, DB_NAME } = require('../config/consts.json');
 
 const productSchema = new Schema({
-    name: String,
+    name: { type: String, required: true },
     brand: String,
     price: String,
     onSale: Boolean,
@@ -12,7 +13,7 @@ const productSchema = new Schema({
 
 const Product = model('Product', productSchema);
 
-mongoose.connect(`mongodb://localhost:27017/tesco`, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(`mongodb://${DB_URL}/${DB_NAME}`, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
         console.error(err);
     } else {
