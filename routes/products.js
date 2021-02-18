@@ -6,18 +6,18 @@ const { Product } = require("../config/db");
 router.get("/getAll", (req, res) => {
     Product.find((err, products) => {
         if (err) {
-            console.error(err);
+            next(err);
         }
         res.send(products);
     })
 });
 
 router.get("/read/:id", (req, res, next) => {
-    Product.findById(req.params.id, (err, products) => {
+    Product.findById(req.params.id, (err, result) => {
         if (err) {
-            console.error(err);
+            next(err);
         } else {
-            res.send(products);
+            res.status(200).send(result);
         }
     })
 })
@@ -30,14 +30,14 @@ router.post("/create", (req, res, next) => {
         res.status(201).send(`${result.name} has been added successfully`)
     })
         //refactor to use a middleware function isntead!
-        .catch((err) => console.error(err));
+        .catch((err) => next(err));
 });
 
 // url parameters
 router.delete("/delete/:id", (req, res, next) => {
     Product.findByIdAndDelete(req.params.id, (err) => {
         if (err) {
-            console.error(err);
+            next(err);
         } else {
             res.status(204).send(`successfully deleted`);
         }
@@ -48,11 +48,23 @@ router.delete("/delete/:id", (req, res, next) => {
 router.patch("/update/:id", (req, res, next) => {
     Product.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, result) => {
         if (err) {
-            console.error(err);
+            next(err);
         }
         res.status(202).send(`successfully updated!`)
     })
 });
+
+//replace a document
+router.put("/replace/:id", (req, res, next) => {
+    const { name, price, onSale } = req.query;
+    Product.findByIdAndUpdate(req.params.id, { name, price, onSale }, { new: true }, (err, result) => {
+        if (err) {
+            console.error(err);
+        }
+        res.status(202).send(`Successfully replaced!`);
+    });
+});
+
 
 module.exports = router;
 // because you need to export it
