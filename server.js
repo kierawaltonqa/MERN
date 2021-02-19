@@ -23,6 +23,10 @@ const productRoute = require('./routes/products');
 // .use method: lets us look for st at a specific path and have functions associated to it
 app.use("/product", productRoute);
 
+app.use("/hello", (req, res, next) => {
+    res.send("hello");
+})
+
 //error handling
 app.use((req, res, next) => {
     next(createError(404, `Resource not found`));
@@ -36,3 +40,5 @@ app.use((err, req, res, next) => {
 const server = app.listen(5019, () => {
     console.log(`server has successfully started on port number: ${server.address().port}`);
 })
+
+module.exports = server;
