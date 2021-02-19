@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const createError = require(`http-errors`);
+// product url details here
 
 // instantiate my app 
 const app = express();
